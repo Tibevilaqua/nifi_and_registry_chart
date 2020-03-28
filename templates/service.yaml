@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nifi_and_registry_chart.fullname" . }}
+  labels:
+    {{- include "nifi_and_registry_chart.labels" . | nindent 4 }}
+spec:
+  externalIPs: {{.Values.service.externalIPs}}
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      protocol: {{ .Values.service.protocol }}
+      name: {{ .Values.service.name }}
+  selector:
+    {{- include "nifi_and_registry_chart.selectorLabels" . | nindent 4 }}
